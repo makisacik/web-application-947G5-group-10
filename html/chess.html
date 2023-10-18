@@ -17,6 +17,7 @@
   <script>
     // solve n queens -> Array of solutions
     // func put queens in chessboard
+    var solutions;
 
     function createChessboard() {
       const boardSize = document.getElementById("boardSize").value;
@@ -29,20 +30,58 @@
         chessboard.style.setProperty("--n", n);
         let squares = "";
 
+        solutions = solveNQueens(n);
+
+        for (const solution of solutions) {
+          console.log(solution);
+          console.log("\n");
+        }
+
         for (let row = 0; row < n; row++) {
           for (let col = 0; col < n; col++) {
             const isBlack = (row + col) % 2 === 1;
             const squareClass = isBlack ? "square black" : "square white";
-            squares +=
-              '<div class="' +
-              squareClass +
-              '">' +
-              '<img src="queen.png" width="50" height="50">' +
-              "</div>";
+
+            if (solutions[0][row][col] === "Q") {
+              squares +=
+                '<div class="' +
+                squareClass +
+                '">' +
+                '<img src="queen.png" width="50" height="50">' +
+                "</div>";
+            } else {
+              squares += '<div class="' + squareClass + '">' + "</div>";
+            }
           }
         }
 
         chessboard.innerHTML = squares;
+      }
+
+      function solveNQueens(N) {
+        let ans = [],
+          board = Array.from({ length: N }, () => new Array(N).fill("."));
+
+        const place = (i, vert, ldiag, rdiag) => {
+          if (i === N) {
+            let res = new Array(N);
+            for (let row = 0; row < N; row++) res[row] = board[row].join("");
+            ans.push(res);
+            return;
+          }
+          for (let j = 0; j < N; j++) {
+            let vmask = 1 << j,
+              lmask = 1 << (i + j),
+              rmask = 1 << (N - i - 1 + j);
+            if (vert & vmask || ldiag & lmask || rdiag & rmask) continue;
+            board[i][j] = "Q";
+            place(i + 1, vert | vmask, ldiag | lmask, rdiag | rmask);
+            board[i][j] = ".";
+          }
+        };
+
+        place(0, 0, 0, 0);
+        return ans;
       }
 
       // solve n queens
