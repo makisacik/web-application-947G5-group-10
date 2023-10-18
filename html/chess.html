@@ -28,9 +28,20 @@
       } else {
         chessboard.style.setProperty("--n", n);
         let squares = "";
-        for (let i = 0; i < n * n; i++) {
-          squares += '<div class="square"></div>';
+
+        for (let row = 0; row < n; row++) {
+          for (let col = 0; col < n; col++) {
+            const isBlack = (row + col) % 2 === 1;
+            const squareClass = isBlack ? "square black" : "square white";
+            squares +=
+              '<div class="' +
+              squareClass +
+              '">' +
+              '<img src="queen.png" width="50" height="50">' +
+              "</div>";
+          }
         }
+
         chessboard.innerHTML = squares;
       }
 
