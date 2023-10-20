@@ -1,6 +1,6 @@
 .chessboard {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     display: grid;
     grid-template-columns: repeat(var(--n, 8), 1fr);
     grid-template-rows: repeat(var(--n, 8), 1fr);
