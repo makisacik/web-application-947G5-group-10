@@ -17,7 +17,8 @@
     <label id="selectedCoordinates">Selected coordinates:</label>
 
     <br /><br />
-    <button onclick="createBoardClicked()">Create Board</button>
+    <button onclick="createBoardClicked()">Solve N Queen</button>
+    <label id="appliedCoordinates">Applied coordinates:</label>
     <br /><br />
     <div class="chessboard" id="chessboard"></div>
     <br /><br />
@@ -34,6 +35,7 @@
     var solutions;
     var currentSolution = 0;
     var selectedCoordinates = [];
+    var appliedCoordinates = [];
 
     function addCoordinateClicked() {
       const queenRow = document.getElementById("queenRow").value;
@@ -82,14 +84,19 @@
 
     function createBoardClicked() {
       currentSolution = 0;
+      appliedCoordinates = selectedCoordinates;
       createChessboard();
-      document.getElementById("currentSolution").innerHTML =
-        "Current Solution: " + (currentSolution + 1).toString();
+      document.getElementById("appliedCoordinates").textContent =
+        "Applied coordinates: " +
+        selectedCoordinates.map(([row, col]) => `(${row},${col})`).join(" ");
+      selectedCoordinates = [];
+      document.getElementById("selectedCoordinates").textContent =
+        "Selected coordinates:";
     }
 
     function createChessboard(nthSolution = 0) {
       const boardSize = document.getElementById("boardSize").value;
-      if (boardSize == 2 || boardSize == 3 || boardSize > 10) {
+      if (boardSize > 10) {
         alert("Please enter a valid board size");
         return;
       }
@@ -105,12 +112,20 @@
         solutions = solveNQueens(n);
         solutions = solutions.filter(isSolutionValid);
 
+        if (solutions.length === 0) {
+          console.log(appliedCoordinates);
+          alert("No solutions found with the selected coordinates.");
+          document.getElementById("currentSolution").innerHTML = "";
+          document.getElementById("solutionCount").innerHTML = "";
+          chessboard.innerHTML = "";
+          return;
+        }
+
+        document.getElementById("currentSolution").innerHTML =
+          "Current Solution: " + (currentSolution + 1).toString();
+
         document.getElementById("solutionCount").innerHTML =
           "Solution Count: " + solutions.length.toString();
-
-        if (solutions.length === 0) {
-          alert("No solutions found with the selected coordinates.");
-        }
 
         for (let row = 0; row < n; row++) {
           for (let col = 0; col < n; col++) {
@@ -129,7 +144,7 @@
             }
           }
         }
-
+        console.log("innerHTML");
         chessboard.innerHTML = squares;
       }
 
@@ -160,7 +175,7 @@
       }
 
       function isSolutionValid(solution) {
-        for (const [row, col] of selectedCoordinates) {
+        for (const [row, col] of appliedCoordinates) {
           if (solution[row][col] !== "Q") {
             return false;
           }
