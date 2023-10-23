@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/chess-style.css" />
+    <title>N-Queens Completion</title>
+  </head>
+  <body>
+    <label for="boardSize">Enter board size:</label>
+    <input type="number" id="boardSize" name="boardSize" min="1" max="10" />
+    <br /><br />
+    <label for="queenRow">Add a queen to a coordinate:</label>
+    <input
+      type="number"
+      id="queenRow"
+      name="queenRow"
+      value="0"
+      min="0"
+      max="9"
+    />
+    <input
+      type="number"
+      id="queenColumn"
+      name="queenColumn"
+      value="0"
+      min="0"
+      max="9"
+    />
+    <button onclick="addCoordinateClicked()">
+      Add Coordinate (row,column)
+    </button>
+    <label id="selectedCoordinates">Selected coordinates:</label>
+
+    <br /><br />
+    <button onclick="createBoardClicked()">Solve N Queen</button>
+    <label id="appliedCoordinates">Applied coordinates:</label>
+    <br /><br />
+    <div class="chessboard" id="chessboard"></div>
+    <br /><br />
+    <div class="navigationDiv">
+      <button onclick="showPreviousSolution()">Previous</button>
+      <button onclick="showNextSolution()">Next</button>
+      <label></label>
+      <label id="currentSolution"></label>
+      <label id="solutionCount"></label>
+    </div>
+  </body>
+  <script src="../js/chess-script.js"></script>
+</html>
