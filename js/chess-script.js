@@ -14,15 +14,15 @@ function addCoordinateClicked() {
     queenColumn >= 0 &&
     queenColumn < boardSize
   ) {
-    selectedCoordinates.push([queenRow, queenColumn]);
-    document.getElementById("selectedCoordinates").innerHTML =
-      document.getElementById("selectedCoordinates").innerHTML +
-      "(" +
-      queenRow +
-      "," +
-      queenColumn +
-      ") ";
-    console.log(selectedCoordinates);
+    if (selectedCoordinates.some(coord => coord[0] === queenRow && coord[1] === queenColumn)) {
+      alert(`Coordinate (${queenRow}, ${queenColumn}) already exists.`);
+    } else {
+      selectedCoordinates.push([queenRow, queenColumn]);
+      document.getElementById("selectedCoordinates").innerHTML =
+        document.getElementById("selectedCoordinates").innerHTML +
+        `(${queenRow}, ${queenColumn}) `;
+      console.log(selectedCoordinates);
+    }
   } else {
     alert("Enter a valid coordinate for the board size.");
   }
