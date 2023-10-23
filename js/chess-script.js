@@ -4,9 +4,9 @@ var selectedCoordinates = [];
 var appliedCoordinates = [];
 
 function addCoordinateClicked() {
-  const queenRow = document.getElementById("queenRow").value;
-  const queenColumn = document.getElementById("queenColumn").value;
-  const boardSize = document.getElementById("boardSize").value;
+  const queenRow = parseInt(document.getElementById("queenRow").value);
+  const queenColumn = parseInt(document.getElementById("queenColumn").value);
+  const boardSize = parseInt(document.getElementById("boardSize").value);
 
   if (
     queenRow < boardSize &&
@@ -62,16 +62,18 @@ function createBoardClicked() {
 
 function createChessboard(nthSolution = 0) {
   const boardSize = document.getElementById("boardSize").value;
-  if (boardSize > 10) {
-    alert("Please enter a valid board size");
-    return;
-  }
+
   const n = parseInt(boardSize);
   const chessboard = document.getElementById("chessboard");
 
-  if (boardSize < 0 || boardSize == "") {
+  if (boardSize < 0) {
+    alert("Board size can't be less than 1");
+  } else if (boardSize > 10) {
+    alert("Board size can't be more than 10");
+  } else if (boardSize == ""){
     alert("Please enter a valid number for the size.");
-  } else {
+  }
+  else {
     chessboard.style.setProperty("--n", n);
     let squares = "";
 
@@ -80,7 +82,7 @@ function createChessboard(nthSolution = 0) {
 
     if (solutions.length === 0) {
       console.log(appliedCoordinates);
-      alert("No solutions found with the selected coordinates.");
+      alert("No solutions found.");
       document.getElementById("currentSolution").innerHTML = "";
       document.getElementById("solutionCount").innerHTML = "";
       chessboard.innerHTML = "";
