@@ -77,10 +77,8 @@ function createBoard() {
             const square = document.createElement("div");
             if (boardArray[row][col] == '.') {
                 square.className = "square background";
-            } else if (boardArray[row][col] == 'A') {
-                square.className = "square A";
             } else {
-                square.className = "square A";
+                square.className = `square ${boardArray[row][col]}`;
             }
             board.appendChild(square);
         }

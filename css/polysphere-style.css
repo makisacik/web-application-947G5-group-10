@@ -49,7 +49,51 @@
 }
 
 .A {
-  background-color: red;
+  background-color: #E71D10;
+}
+
+.B {
+  background-color: #EB68A4;
+}
+
+.C {
+  background-color: #FFBCDE;
+}
+
+.D {
+  background-color: #077FC8;
+}
+
+.E {
+  background-color: #FCE22C;
+}
+
+.F {
+  background-color: #B76AB0;
+}
+
+.G {
+  background-color: #6D3E8F;
+}
+
+.H {
+  background-color: #83C789;
+}
+
+.I {
+  background-color: #F36E23;
+}
+
+.J {
+  background-color: #00A235;
+}
+
+.K {
+  background-color: #F6B736;
+}
+
+.L {
+  background-color: #87C3E7;
 }
 
 .highlighted {
