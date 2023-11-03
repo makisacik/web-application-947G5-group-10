@@ -12,7 +12,7 @@
   border-radius: 10px;
   margin: 0 auto; /* Center the container horizontally */
   margin-top: 10px; /* Add some top margin for spacing */
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .piece-image {
@@ -48,7 +48,26 @@
   background-color: rgb(225, 228, 215);
 }
 
+.A {
+  background-color: red;
+}
+
 .highlighted {
-  border: 2px solid green; 
+  border: 2px solid #007BFF; 
   border-radius: 5px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#button-add-piece {
+  background-color: #007BFF; /* Set the background color */
+  color: #fff; /* Set the text color */
+  padding: 10px 20px; /* Adjust padding for spacing */
+  border: none; /* Remove the border */
+  border-radius: 5px;
+  cursor: pointer; /* Add a pointer cursor on hover */
 }
