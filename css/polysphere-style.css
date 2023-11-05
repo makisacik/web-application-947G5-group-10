@@ -107,11 +107,12 @@
   margin-bottom: 20px;
 }
 
-#button-add-piece {
+.button {
   background-color: #007BFF; /* Set the background color */
   color: #fff; /* Set the text color */
   padding: 10px 20px; /* Adjust padding for spacing */
   border: none; /* Remove the border */
   border-radius: 5px;
   cursor: pointer; /* Add a pointer cursor on hover */
+  margin-left: 10px;
 }

@@ -101,6 +101,59 @@ function addPieceClicked() {
     createBoard()
 }
 
+function moveLeftClicked() {
+    for (let row = 0; row < rows; row++){
+        for (let col = 0; col < cols; col++) {
+            if (boardArray[row][col] != '.' && col > 0) {
+                if (boardArray[row][col] != boardArray[row][col - 1]) {
+                    boardArray[row][col - 1] = boardArray[row][col]
+                    boardArray[row][col] = '.'
+                }
+            }
+        }
+    }
+    createBoard()
+}
+
+function moveRightClicked() {
+    for (let row = 0; row < rows; row++){
+        for (let col = 10; col >= 0; col--) {
+            if (boardArray[row][col] != '.' && 10 > col) {
+                boardArray[row][col + 1] = boardArray[row][col]
+                boardArray[row][col] = '.'
+            }
+        }
+    }
+    createBoard()
+}
+
+function moveUpClicked() {
+    for (let row = 0; row < rows; row++){
+        for (let col = 0; col < cols; col++) {
+            if (boardArray[row][col] != '.' && row > 0) {
+                boardArray[row - 1][col] = boardArray[row][col]
+                boardArray[row][col] = '.'
+            }
+        }
+    }
+    createBoard()
+
+}
+
+function moveDownClicked() {
+    for (let row = 4; row >= 0; row--){
+        for (let col = 0; col < cols; col++) {
+            if (boardArray[row][col] != '.' && row < 4) {
+                boardArray[row + 1][col] = boardArray[row][col]
+                boardArray[row][col] = '.'
+            }
+        }
+    }
+    createBoard()
+
+}
+
+
 initBoardArray()
 createBoard()
 createPiecesContainer()
