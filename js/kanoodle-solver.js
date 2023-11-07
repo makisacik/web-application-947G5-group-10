@@ -150,9 +150,9 @@ function recurse(matrix, rows, columns, solutions, partialSolution) {
     return;
   }
 
-  // if (solutions.length > 20) {
-  //   return;
-  // }
+  if (solutions.length > 90000) {
+    return;
+  }
 
   const [selectedCol, minValue] = minNumOnes(matrix, rows, columns);
   if (minValue === 0) {
@@ -231,11 +231,9 @@ function main() {
   }
 }
 
-console.log("1");
-
 self.onmessage = function (event) {
   const message = event.data;
-  // Perform your background tasks here
+
   console.log("message");
   console.log(message);
   main();

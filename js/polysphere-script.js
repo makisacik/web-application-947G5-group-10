@@ -6,6 +6,9 @@ let boardArray = [];
 let solutionsArray = [];
 let currentSolutionIndex;
 
+let isPieceAdded = false;
+let addedPieceBoard = [];
+
 let piecesArray = [
   [
     ["A", "A", "A"],
@@ -132,6 +135,9 @@ function addPieceClicked() {
   }
   console.log(boardArray);
   createBoard(boardArray);
+
+  isPieceAdded = true;
+  addedPieceBoard = boardArray;
 }
 
 function moveLeftClicked() {
@@ -207,21 +213,50 @@ function arraysAreEqual(arr1, arr2) {
   return true; // The arrays are equal.
 }
 
+function isPieceArrayEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length || arr1[0].length !== arr2[0].length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    for (let j = 0; j < arr1[i].length; j++) {
+      if (arr1[i][j] !== " " && arr1[i][j] !== arr2[i][j]) {
+        return false; // Non-empty elements are not equal.
+      }
+    }
+  }
+
+  return true; // All non-empty elements are equal.
+}
+
 function solvePuzzleClicked() {
+  currentSolutionIndex = -1;
+  solutionsArray = [];
   const worker = new Worker("../js/kanoodle-solver.js");
+  const solutionLabel = document.getElementById("label-solution-count");
 
   worker.onmessage = function (event) {
     const solution = event.data;
-    //console.log("Message from worker:", solution);
+    console.log("Message from worker:", solution);
+    if (isPieceAdded) {
+      if (!isPieceArrayEqual(addedPieceBoard, solution)) {
+        return;
+      }
+    }
+
     if (!is2DArrayInArray(solutionsArray, solution)) {
       solutionsArray.push(solution);
     } else {
       console.log("exists");
     }
-    const solutionLabel = document.getElementById("label-solution");
     solutionLabel.textContent = "Solution Count: " + solutionsArray.length;
-    if (typeof currentSolutionIndex === "undefined") {
+    if (currentSolutionIndex == -1) {
       currentSolutionIndex = 0;
+      const currentSolutionLabel = document.getElementById(
+        "label-current-solution"
+      );
+      currentSolutionLabel.textContent =
+        "Current Solution: " + (currentSolutionIndex + 1);
       createBoard(solution);
     }
   };
@@ -230,13 +265,39 @@ function solvePuzzleClicked() {
 }
 
 function nextSolutionClicked() {
-  currentSolutionIndex = currentSolutionIndex + 1;
-  createBoard(solutionsArray[currentSolutionIndex]);
+  if (currentSolutionIndex == -1) {
+    alert("You need to solve the puzzle first.");
+  } else {
+    currentSolutionIndex = currentSolutionIndex + 1;
+    if (currentSolutionIndex < solutionsArray.length) {
+      createBoard(solutionsArray[currentSolutionIndex]);
+      const currentSolutionLabel = document.getElementById(
+        "label-current-solution"
+      );
+      currentSolutionLabel.textContent =
+        "Current Solution: " + (currentSolutionIndex + 1);
+    } else {
+      currentSolutionIndex = currentSolutionIndex - 1;
+    }
+  }
 }
 
 function previousSolutionClicked() {
-  currentSolutionIndex = currentSolutionIndex - 1;
-  createBoard(solutionsArray[currentSolutionIndex]);
+  if (currentSolutionIndex == -1) {
+    alert("You need to solve the puzzle first.");
+  } else {
+    currentSolutionIndex = currentSolutionIndex - 1;
+    if (currentSolutionIndex >= 0) {
+      createBoard(solutionsArray[currentSolutionIndex]);
+      const currentSolutionLabel = document.getElementById(
+        "label-current-solution"
+      );
+      currentSolutionLabel.textContent =
+        "Current Solution: " + (currentSolutionIndex + 1);
+    } else {
+      currentSolutionIndex = currentSolutionIndex + 1;
+    }
+  }
 }
 
 initBoardArray();
