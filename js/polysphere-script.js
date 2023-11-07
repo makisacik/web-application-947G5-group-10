@@ -59,7 +59,7 @@ function createPiecesContainer() {
     for (let i = 1; i <= 12; i++) {
         const img = document.createElement("img");
         img.id = `${i}`;
-        img.src = `piece${i}.png`;
+        img.src = `../resources/images/piece${i}.png`;
         img.alt = `piece ${i} png`;
         img.width = 100;
         img.height = 90;
@@ -158,36 +158,4 @@ initBoardArray()
 createBoard()
 createPiecesContainer()
 addEventListenerToPuzzles()
-  
 
-
-
-/*
-  const pieces2 = [
-    [['A','A','A'],['A','.','A']],
-    [['.','.','B','B'],['B','B','B']],
-    [['.','C'],['C','C'],['.','C','C']],
-    "D\nDDD",
-    "E\nEEEE",
-    "FF\nFFF",
-    "GG\nGG",
-    "HH\nH\nH",
-    "III\n  I\n  I",
-    "J\nJJJJ",
-    "K\nKK",
-    "LL\n LL\n  L",
-  ];
-
-  pieces["piece-1"] = [['A','A','A'],['A','.','A']]
-pieces["piece-2"] = [['.','.','B','B'],['B','B','B']]
-pieces["piece-3"] = [['.','C'],['C','C'],['.','C','C']]
-pieces["piece-4"] = [['.','D'],['D','D','D']]
-pieces["piece-5"] = [['.','E'],['E','E','E','E']]
-pieces["piece-6"] = [['.','F','F'],['F','F','F']]
-pieces["piece-7"] = [['.','G','G'],['G','G','.']]
-pieces["piece-8"] = [['H','H'],['H'],['H']]
-pieces["piece-9"] = [['I','I','I'],['.','.','I'],['.','.','I']]
-pieces["piece-10"] = [['J'],['J','J','J','J']]
-pieces["piece-11"] = [['K'],['K','K']]
-pieces["piece-12"] = [['L','L'],['.','L','L'],['.','.','L']]
-  */
