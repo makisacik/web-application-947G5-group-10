@@ -51,6 +51,11 @@
   background-color: rgb(225, 228, 215);
 }
 
+.label-solution {
+  margin-left: 20px;
+  align-items: center;
+}
+
 .A {
   background-color: #E71D10;
 }

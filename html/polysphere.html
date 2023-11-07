@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/polysphere-style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
     <title>Polysphere Application</title>
   </head>
   <body>
@@ -16,17 +21,42 @@
       </button>
 
       <button class="button" id="button-left" onclick="moveLeftClicked()">
-        Move Left
+        <i class="fas fa-arrow-left"></i> Move Left
       </button>
+
       <button class="button" id="button-right" onclick="moveRightClicked()">
-        Move Right
+        Move Right <i class="fas fa-arrow-right"></i>
       </button>
+
       <button class="button" id="button-up" onclick="moveUpClicked()">
-        Move Up
+        <i class="fas fa-arrow-up"></i> Move Up
       </button>
+
       <button class="button" id="button-down" onclick="moveDownClicked()">
-        Move Down
+        Move Down <i class="fas fa-arrow-down"></i>
       </button>
+    </div>
+
+    <div class="button-container">
+      <button class="button" id="button-solve" onclick="solvePuzzleClicked()">
+        Solve Puzzle
+      </button>
+    </div>
+
+    <div class="button-container">
+      <button
+        class="button"
+        id="button-previous"
+        onclick="previousSolutionClicked()"
+      >
+        Previous Solution
+      </button>
+
+      <button class="button" id="button-next" onclick="nextSolutionClicked()">
+        Next Solution
+      </button>
+
+      <label id="label-solution"></label>
     </div>
 
     <div class="board" id="board"></div>
@@ -35,18 +65,6 @@
 
     <script src="../js/polysphere-script.js"></script>
 
-    <script>
-      const worker = new Worker("../js/kanoodle-solver.js");
-
-      worker.onmessage = function (event) {
-        const message = event.data;
-        // Handle the message from the worker
-        // You can update the DOM or perform other actions here
-        console.log("Message from worker:", message);
-      };
-
-      // To send a message to the worker (optional)
-      worker.postMessage("Hello from the main thread!");
-    </script>
+    <script></script>
   </body>
 </html>

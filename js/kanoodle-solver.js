@@ -1,6 +1,8 @@
 const W = 11;
 const H = 5;
 
+const choices = createMatrix();
+
 function parseTiles(letters, tiles) {
   return letters.map((letter, index) =>
     tiles[index].reduce((acc, row, y) => {
@@ -143,15 +145,14 @@ function minNumOnes(matrix, rows, columns) {
 
 function recurse(matrix, rows, columns, solutions, partialSolution) {
   if (columns.size === 0) {
-    //choices = createMatrix;
-    //printSolution(choices, partialSolution);
     solutions.push([...partialSolution]);
+    printSolution(choices, partialSolution);
     return;
   }
 
-  if (solutions.length > 10000) {
-    return;
-  }
+  // if (solutions.length > 20) {
+  //   return;
+  // }
 
   const [selectedCol, minValue] = minNumOnes(matrix, rows, columns);
   if (minValue === 0) {
@@ -213,14 +214,10 @@ function printSolution(choices, solution) {
     }
     boardArray.push(row);
   }
-  console.log("boardArray");
-  console.log(boardArray);
   self.postMessage(boardArray);
-  console.log("");
 }
 
 function main() {
-  const choices = createMatrix();
   const matrix = choices.map((row) => row[1]);
 
   const rows = new Set([...Array(matrix.length).keys()]);
@@ -239,6 +236,7 @@ console.log("1");
 self.onmessage = function (event) {
   const message = event.data;
   // Perform your background tasks here
+  console.log("message");
   console.log(message);
   main();
 };

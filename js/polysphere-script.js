@@ -3,6 +3,9 @@ const cols = 11;
 
 let boardArray = [];
 
+let solutionsArray = [];
+let currentSolutionIndex;
+
 let piecesArray = [
   [
     ["A", "A", "A"],
@@ -179,6 +182,61 @@ function moveDownClicked() {
     }
   }
   createBoard(boardArray);
+}
+
+function is2DArrayInArray(arrayOf2DArrays, newArray) {
+  for (const existingArray of arrayOf2DArrays) {
+    if (arraysAreEqual(existingArray, newArray)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function arraysAreEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (!arr1[i].every((val, index) => val === arr2[i][index])) {
+      return false;
+    }
+  }
+
+  return true; // The arrays are equal.
+}
+
+function solvePuzzleClicked() {
+  const worker = new Worker("../js/kanoodle-solver.js");
+
+  worker.onmessage = function (event) {
+    const solution = event.data;
+    //console.log("Message from worker:", solution);
+    if (!is2DArrayInArray(solutionsArray, solution)) {
+      solutionsArray.push(solution);
+    } else {
+      console.log("exists");
+    }
+    const solutionLabel = document.getElementById("label-solution");
+    solutionLabel.textContent = "Solution Count: " + solutionsArray.length;
+    if (typeof currentSolutionIndex === "undefined") {
+      currentSolutionIndex = 0;
+      createBoard(solution);
+    }
+  };
+
+  worker.postMessage("Hello from the main thread!");
+}
+
+function nextSolutionClicked() {
+  currentSolutionIndex = currentSolutionIndex + 1;
+  createBoard(solutionsArray[currentSolutionIndex]);
+}
+
+function previousSolutionClicked() {
+  currentSolutionIndex = currentSolutionIndex - 1;
+  createBoard(solutionsArray[currentSolutionIndex]);
 }
 
 initBoardArray();
