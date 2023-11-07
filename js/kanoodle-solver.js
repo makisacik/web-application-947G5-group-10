@@ -196,7 +196,6 @@ function printSolution(choices, solution) {
   const numLetters = choices[0][1].length - W * H;
   const flatMap = new Array(W * H).fill(" ");
 
-  let solutionArray = [];
   for (const [letter, row] of solutionRows) {
     for (let i = 0; i < W * H; i++) {
       if (row[numLetters + i] === 1) {
@@ -205,14 +204,18 @@ function printSolution(choices, solution) {
     }
   }
 
+  let boardArray = [];
+
   for (let y = 0; y < H; y++) {
-    let rowStr = "";
+    const row = [];
     for (let x = 0; x < W; x++) {
-      rowStr += flatMap[y * W + x];
+      row.push(flatMap[y * W + x]);
     }
-    solutionArray.push(rowStr);
+    boardArray.push(row);
   }
-  console.log(solutionArray);
+  console.log("boardArray");
+  console.log(boardArray);
+  self.postMessage(boardArray);
   console.log("");
 }
 
@@ -229,8 +232,6 @@ function main() {
   for (const solution of solutions) {
     printSolution(choices, solution);
   }
-
-  return solutions;
 }
 
 console.log("1");
@@ -239,10 +240,5 @@ self.onmessage = function (event) {
   const message = event.data;
   // Perform your background tasks here
   console.log(message);
-  const result = main();
-
-  console.log("message");
-  console.log(message);
-  // Send the result back to the main thread
-  self.postMessage(result);
+  main();
 };
