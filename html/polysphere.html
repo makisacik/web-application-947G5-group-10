@@ -34,5 +34,19 @@
     <div id="output"></div>
 
     <script src="../js/polysphere-script.js"></script>
+
+    <script>
+      const worker = new Worker("../js/kanoodle-solver.js");
+
+      worker.onmessage = function (event) {
+        const message = event.data;
+        // Handle the message from the worker
+        // You can update the DOM or perform other actions here
+        console.log("Message from worker:", message);
+      };
+
+      // To send a message to the worker (optional)
+      worker.postMessage("Hello from the main thread!");
+    </script>
   </body>
 </html>
