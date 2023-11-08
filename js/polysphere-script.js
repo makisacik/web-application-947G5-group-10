@@ -9,6 +9,9 @@ let currentSolutionIndex;
 let isPieceAdded = false;
 let addedPieceBoard = [];
 
+let isWorkerActive = false;
+let worker;
+
 let piecesArray = [
   [
     ["A", "A", "A"],
@@ -122,6 +125,7 @@ function createBoard(boardArray) {
 
 function addPieceClicked() {
   boardArray = [];
+  solutionsArray = [];
   initBoardArray();
   const selectedPiece = piecesArray[selectedPieceIndex];
   let pieceRowIndex = 0;
@@ -230,36 +234,48 @@ function isPieceArrayEqual(arr1, arr2) {
 }
 
 function solvePuzzleClicked() {
-  currentSolutionIndex = -1;
-  solutionsArray = [];
-  const worker = new Worker("../js/kanoodle-solver.js");
-  const solutionLabel = document.getElementById("label-solution-count");
+  const buttonSolve = document.getElementById("button-solve");
+  if (isWorkerActive) {
+    buttonSolve.textContent = "Solve Puzzle";
+    buttonSolve.style.backgroundColor = "#007BFF";
+    isWorkerActive = false;
+    worker.terminate();
+  } else {
+    isWorkerActive = true;
+    buttonSolve.textContent = "Stop Solving";
+    buttonSolve.style.backgroundColor = "red";
 
-  worker.onmessage = function (event) {
-    const solution = event.data;
-    console.log("Message from worker:", solution);
-    if (isPieceAdded) {
-      if (!isPieceArrayEqual(addedPieceBoard, solution)) {
-        return;
+    currentSolutionIndex = -1;
+    solutionsArray = [];
+    worker = new Worker("../js/kanoodle-solver.js");
+    const solutionLabel = document.getElementById("label-solution-count");
+
+    worker.onmessage = function (event) {
+      const solution = event.data;
+      console.log("Message from worker:", solution);
+      if (isPieceAdded) {
+        if (!isPieceArrayEqual(addedPieceBoard, solution)) {
+          return;
+        }
       }
-    }
 
-    if (!is2DArrayInArray(solutionsArray, solution)) {
-      solutionsArray.push(solution);
-    } else {
-      console.log("exists");
-    }
-    solutionLabel.textContent = "Solution Count: " + solutionsArray.length;
-    if (currentSolutionIndex == -1) {
-      currentSolutionIndex = 0;
-      const currentSolutionLabel = document.getElementById(
-        "label-current-solution"
-      );
-      currentSolutionLabel.textContent =
-        "Current Solution: " + (currentSolutionIndex + 1);
-      createBoard(solution);
-    }
-  };
+      if (!is2DArrayInArray(solutionsArray, solution)) {
+        solutionsArray.push(solution);
+      } else {
+        console.log("exists");
+      }
+      solutionLabel.textContent = "Solution Count: " + solutionsArray.length;
+      if (currentSolutionIndex == -1) {
+        currentSolutionIndex = 0;
+        const currentSolutionLabel = document.getElementById(
+          "label-current-solution"
+        );
+        currentSolutionLabel.textContent =
+          "Current Solution: " + (currentSolutionIndex + 1);
+        createBoard(solution);
+      }
+    };
+  }
 
   worker.postMessage("Hello from the main thread!");
 }
