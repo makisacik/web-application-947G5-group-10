@@ -105,7 +105,7 @@ function createChessboard(nthSolution = 0) {
             '<div class="' +
             squareClass +
             '">' +
-            '<img src="queen.png" width="50" height="50">' +
+            '<img src="../resources/images/queen.png" width="50" height="50">' +
             "</div>";
         } else {
           squares += '<div class="' + squareClass + '">' + "</div>";
