@@ -1,18 +1,18 @@
 .title {
   text-align: center;
-  font-size: 24px; /* Adjust the font size as needed */
-  margin-top: 20px; /* Add some top margin for spacing */
-  margin-bottom: 20px;
+  font-size: 24px;
+  margin-top: 2px;
+  margin-bottom: 10px;
 }
 
 .pieces-container {
   width: 600px;
-  height: 350px;
+  height: 320px;
   border: 2px solid black;
   border-radius: 10px;
-  margin: 0 auto; /* Center the container horizontally */
-  margin-top: 10px; /* Add some top margin for spacing */
-  margin-bottom: 10px;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 .piece-image {
@@ -26,15 +26,15 @@
   grid-template-columns: repeat(11, 1fr);
   border: 2px solid black;
   margin-top: 20px;
-  width: max-content; /* Allow the board to expand to the full width of its content */
-  margin: 0 auto; /* Center the board horizontally */
+  width: max-content;
+  margin: 0 auto;
   margin-bottom: 20px;
 
 }
 
 .square {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,11 +117,11 @@
 }
 
 .button {
-  background-color: #007BFF; /* Set the background color */
-  color: #fff; /* Set the text color */
-  padding: 10px 20px; /* Adjust padding for spacing */
-  border: none; /* Remove the border */
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
   border-radius: 5px;
-  cursor: pointer; /* Add a pointer cursor on hover */
+  cursor: pointer;
   margin-left: 10px;
 }
