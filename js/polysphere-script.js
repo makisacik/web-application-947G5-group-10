@@ -57,6 +57,8 @@ let piecesArray = [
   ],
 ];
 
+let rotationAngles = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 var selectedPieceIndex;
 
 function initBoardArray() {
@@ -214,7 +216,7 @@ function arraysAreEqual(arr1, arr2) {
     }
   }
 
-  return true; // The arrays are equal.
+  return true;
 }
 
 function isPieceArrayEqual(arr1, arr2) {
@@ -225,12 +227,12 @@ function isPieceArrayEqual(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
     for (let j = 0; j < arr1[i].length; j++) {
       if (arr1[i][j] !== " " && arr1[i][j] !== arr2[i][j]) {
-        return false; // Non-empty elements are not equal.
+        return false;
       }
     }
   }
 
-  return true; // All non-empty elements are equal.
+  return true;
 }
 
 function solvePuzzleClicked() {
@@ -241,6 +243,13 @@ function solvePuzzleClicked() {
     isWorkerActive = false;
     worker.terminate();
   } else {
+    const solutionLabel = document.getElementById("label-solution-count");
+    const currentSolutionLabel = document.getElementById(
+      "label-current-solution"
+    );
+    solutionLabel.textContent = "Solution Count: ";
+    currentSolutionLabel.textContent = "Current Solution: ";
+
     isWorkerActive = true;
     buttonSolve.textContent = "Stop Solving";
     buttonSolve.style.backgroundColor = "red";
@@ -248,11 +257,9 @@ function solvePuzzleClicked() {
     currentSolutionIndex = -1;
     solutionsArray = [];
     worker = new Worker("../js/kanoodle-solver.js");
-    const solutionLabel = document.getElementById("label-solution-count");
 
     worker.onmessage = function (event) {
       const solution = event.data;
-      console.log("Message from worker:", solution);
       if (isPieceAdded) {
         if (!isPieceArrayEqual(addedPieceBoard, solution)) {
           return;
@@ -267,9 +274,7 @@ function solvePuzzleClicked() {
       solutionLabel.textContent = "Solution Count: " + solutionsArray.length;
       if (currentSolutionIndex == -1) {
         currentSolutionIndex = 0;
-        const currentSolutionLabel = document.getElementById(
-          "label-current-solution"
-        );
+
         currentSolutionLabel.textContent =
           "Current Solution: " + (currentSolutionIndex + 1);
         createBoard(solution);
@@ -314,6 +319,94 @@ function previousSolutionClicked() {
       currentSolutionIndex = currentSolutionIndex + 1;
     }
   }
+}
+
+function rotateRight(piece) {
+  const numRows = piece.length;
+  const numCols = Math.max(...piece.map((row) => row.length));
+
+  const rotatedPiece = new Array(numCols)
+    .fill(null)
+    .map(() => new Array(numRows).fill(" "));
+
+  for (let i = 0; i < numRows; i++) {
+    for (let j = 0; j < piece[i].length; j++) {
+      rotatedPiece[j][numRows - 1 - i] = piece[i][j];
+    }
+  }
+
+  return rotatedPiece;
+}
+
+function rotateLeft(piece) {
+  const numRows = piece.length;
+  const numCols = Math.max(...piece.map((row) => row.length));
+
+  const rotatedPiece = new Array(numCols)
+    .fill(null)
+    .map(() => new Array(numRows).fill(" "));
+
+  for (let i = 0; i < numRows; i++) {
+    for (let j = 0; j < piece[i].length; j++) {
+      rotatedPiece[numCols - 1 - j][i] = piece[i][j];
+    }
+  }
+
+  return rotatedPiece;
+}
+
+function rotateLeftClicked() {
+  const images = document.querySelectorAll(".pieces-container img");
+  const image = images[selectedPieceIndex];
+  let currentRotation = rotationAngles[selectedPieceIndex];
+  console.log("currentRotation", currentRotation);
+  const newRotation = (currentRotation - 90) % 360;
+  console.log("newRotation", newRotation);
+  image.style.transform = `rotate(${newRotation}deg)`;
+  rotationAngles[selectedPieceIndex] = newRotation;
+
+  const rotatedPiece = rotateLeft(piecesArray[selectedPieceIndex]);
+  piecesArray[selectedPieceIndex] = rotatedPiece;
+}
+
+function rotateRightClicked() {
+  const images = document.querySelectorAll(".pieces-container img");
+  const image = images[selectedPieceIndex];
+  let currentRotation = rotationAngles[selectedPieceIndex];
+  console.log("currentRotation", currentRotation);
+  const newRotation = (currentRotation + 90) % 360;
+  console.log("newRotation", newRotation);
+  image.style.transform = `rotate(${newRotation}deg)`;
+  rotationAngles[selectedPieceIndex] = newRotation;
+
+  const rotatedPiece = rotateRight(piecesArray[selectedPieceIndex]);
+  piecesArray[selectedPieceIndex] = rotatedPiece;
+}
+
+function clearBoardClicked() {
+  console.log("clearBoardClicked");
+  console.log(isWorkerActive);
+  if (isWorkerActive) {
+    const buttonSolve = document.getElementById("button-solve");
+    buttonSolve.textContent = "Solve Puzzle";
+    buttonSolve.style.backgroundColor = "#007BFF";
+    isWorkerActive = false;
+    worker.terminate();
+    const solutionLabel = document.getElementById("label-solution-count");
+    const currentSolutionLabel = document.getElementById(
+      "label-current-solution"
+    );
+    solutionLabel.textContent = "";
+    currentSolutionLabel.textContent = "";
+  }
+
+  boardArray = [];
+  solutionsArray = [];
+  isPieceAdded = false;
+  currentSolutionIndex = -1;
+
+  initBoardArray();
+  createBoard(boardArray);
 }
 
 initBoardArray();
