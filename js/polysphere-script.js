@@ -58,6 +58,7 @@ let piecesArray = [
 ];
 
 let rotationAngles = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let piecesMirrorStates = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 var selectedPieceIndex;
 
@@ -407,6 +408,40 @@ function clearBoardClicked() {
 
   initBoardArray();
   createBoard(boardArray);
+}
+
+function flipPiece(piece) {
+  const numRows = piece.length;
+  const numCols = Math.max(...piece.map((row) => row.length));
+
+  const oppositePiece = new Array(numRows)
+    .fill(null)
+    .map(() => new Array(numCols).fill(" "));
+
+  for (let i = 0; i < numRows; i++) {
+    for (let j = 0; j < piece[i].length; j++) {
+      oppositePiece[i][numCols - 1 - j] = piece[i][j];
+    }
+  }
+
+  return oppositePiece;
+}
+
+function flipPieceClicked() {
+  const images = document.querySelectorAll(".pieces-container img");
+  const image = images[selectedPieceIndex];
+
+  if (piecesMirrorStates[selectedPieceIndex] == 1) {
+    piecesMirrorStates[selectedPieceIndex] = -1;
+  } else {
+    piecesMirrorStates[selectedPieceIndex] = 1;
+  }
+
+  image.style.transform = `scaleX(${piecesMirrorStates[selectedPieceIndex]})`;
+
+  const oppositePiece = flipPiece(piecesArray[selectedPieceIndex]);
+
+  piecesArray[selectedPieceIndex] = oppositePiece;
 }
 
 initBoardArray();
