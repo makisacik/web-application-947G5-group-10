@@ -16,6 +16,16 @@
     <div class="pieces-container" id="pieces-container"></div>
     <br />
     <div class="button-container">
+      <button class="button" id="rotate-left" onclick="rotateLeftClicked()">
+        <i class="fas fa-rotate-left"></i> Rotate Left
+      </button>
+
+      <button class="button" id="rotate-right" onclick="rotateRightClicked()">
+        Rotate Right <i class="fas fa-rotate-right"></i>
+      </button>
+    </div>
+
+    <div class="button-container">
       <button class="button" id="button-add-piece" onclick="addPieceClicked()">
         Add Piece
       </button>
@@ -34,6 +44,14 @@
 
       <button class="button" id="button-down" onclick="moveDownClicked()">
         Move Down <i class="fas fa-arrow-down"></i>
+      </button>
+
+      <button
+        class="button"
+        id="button-clear-board"
+        onclick="clearBoardClicked()"
+      >
+        Clear Board <i class="fas fa-eraser"></i>
       </button>
     </div>
 
