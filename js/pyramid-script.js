@@ -217,7 +217,7 @@ function solvePuzzleButtonClicked() {
     currentSolutionIndex = 0;
     worker = new Worker("../js/pyramid-solver.js");
     worker.postMessage("start");
-    buttonSolve.style.backgroundColor = "red";
+    buttonSolve.style.backgroundColor = "#dc3545";
     buttonSolve.textContent = "Stop Solving";
     isWorkerActive = true;
 

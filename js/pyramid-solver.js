@@ -373,4 +373,21 @@ const used = makeEmptyUsed();
 const placed = [];
 const result = [];
 const solutions = [];
+
+//
+const startTime = new Date();
+
+console.log("Algorithm started");
+
 fs(0, used, placed, result, solutions);
+
+const endTime = new Date();
+
+const timeDifference = endTime - startTime;
+
+const elapsedTimeInSeconds = timeDifference / 1000;
+
+console.log(`Elapsed Time: ${elapsedTimeInSeconds} seconds`);
+
+console.log("Algorithm finished. Solutions found: ", solutions.length);
+console.log("Solutions: ", solutions);
