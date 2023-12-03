@@ -30,3 +30,8 @@ h1 {
   display: flex;
   margin-top: 20px;
 }
+
+.label-solution {
+  margin-left: 20px;
+  align-items: center;
+}

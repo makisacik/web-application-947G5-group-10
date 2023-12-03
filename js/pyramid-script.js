@@ -1,7 +1,7 @@
 let worker;
 let isWorkerActive = false;
 
-let solutionArray = [
+let exampleSolution = [
   [
     [1, 1, 3, 6, 6],
     [1, 1, 3, 10, 6],
@@ -33,7 +33,8 @@ let solutionArray = [
 
 const threeDArray = [];
 
-let solutions = [];
+let solutionsArray = [];
+let currentSolutionIndex = 0;
 
 for (let i = 0; i < 5; i++) {
   threeDArray[i] = [];
@@ -93,7 +94,7 @@ scene.add(pyramid);
 
 const levels = 5;
 
-function createEmptyPyramid() {
+function createPyramid(solutionArray) {
   for (let i = levels; i >= 1; i--) {
     const rowSize = i;
     for (let j = 0; j < rowSize; j++) {
@@ -202,12 +203,20 @@ function stopCameraRotation() {
 
 function solvePuzzleButtonClicked() {
   const buttonSolve = document.getElementById("solvePuzzleButton");
+  const solutionLabel = document.getElementById("labelSolutionCount");
+  const currentSolutionLabel = document.getElementById("labelCurrentSolution");
+
   if (isWorkerActive) {
     buttonSolve.textContent = "Solve Puzzle";
     buttonSolve.style.backgroundColor = "#007BFF";
     isWorkerActive = false;
     worker.terminate();
   } else {
+    createPyramid(threeDArray);
+    solutionsArray = [];
+    solutionLabel.textContent = "";
+    currentSolutionLabel.textContent = "";
+    currentSolutionIndex = 0;
     worker = new Worker("../js/pyramid-solver.js");
     worker.postMessage("start");
     buttonSolve.style.backgroundColor = "red";
@@ -216,13 +225,57 @@ function solvePuzzleButtonClicked() {
 
     worker.onmessage = function (event) {
       const solution = event.data;
-      console.log("solution: ", solution);
-      solutionArray = solution;
-      worker.terminate();
-      console.log("Termination complete");
+      solutionsArray.push(solution);
 
-      createEmptyPyramid();
+      if (solutionsArray.length == 1) {
+        createPyramid(solution);
+        currentSolutionLabel.textContent = "Current Solution: 1";
+      }
+      solutionLabel.textContent = "Solution Count: " + solutionsArray.length;
+
+      console.log("solution: ", solution);
     };
+  }
+}
+
+function nextSolutionButtonClicked() {
+  console.log(currentSolutionIndex);
+  if (solutionsArray.length == 0) {
+    alert("No solutions to display");
+  } else {
+    if (currentSolutionIndex == solutionsArray.length - 1) {
+      return;
+    } else {
+      currentSolutionIndex++;
+    }
+
+    createPyramid(solutionsArray[currentSolutionIndex]);
+    const currentSolutionLabel = document.getElementById(
+      "labelCurrentSolution"
+    );
+    currentSolutionLabel.textContent =
+      "Current Solution: " + (currentSolutionIndex + 1);
+  }
+}
+
+function previousSolutionButtonClicked() {
+  console.log(currentSolutionIndex);
+
+  if (solutionsArray.length == 0) {
+    alert("No solutions to display");
+  } else {
+    if (currentSolutionIndex == 0) {
+      return;
+    } else {
+      currentSolutionIndex--;
+    }
+
+    createPyramid(solutionsArray[currentSolutionIndex]);
+    const currentSolutionLabel = document.getElementById(
+      "labelCurrentSolution"
+    );
+    currentSolutionLabel.textContent =
+      "Current Solution: " + (currentSolutionIndex + 1);
   }
 }
 
@@ -236,4 +289,12 @@ document
   .querySelector("#solvePuzzleButton")
   .addEventListener("click", solvePuzzleButtonClicked);
 
-createEmptyPyramid();
+document
+  .querySelector("#buttonPreviousSolution")
+  .addEventListener("click", previousSolutionButtonClicked);
+
+document
+  .querySelector("#buttonNextSolution")
+  .addEventListener("click", nextSolutionButtonClicked);
+
+createPyramid(threeDArray);
