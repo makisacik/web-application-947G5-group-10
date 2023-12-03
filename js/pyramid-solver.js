@@ -318,6 +318,7 @@ function zOrder(solution) {
     );
     threeDArray[z][Math.floor(x / 2)][Math.floor(y / 2)] = p;
   }
+  self.postMessage(threeDArray);
   console.log(threeDArray);
   return out;
 }

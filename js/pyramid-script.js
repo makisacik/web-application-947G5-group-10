@@ -1,7 +1,7 @@
 let worker;
 let isWorkerActive = false;
 
-const solutionArray = [
+let solutionArray = [
   [
     [1, 1, 3, 6, 6],
     [1, 1, 3, 10, 6],
@@ -32,6 +32,8 @@ const solutionArray = [
 ];
 
 const threeDArray = [];
+
+let solutions = [];
 
 for (let i = 0; i < 5; i++) {
   threeDArray[i] = [];
@@ -211,6 +213,16 @@ function solvePuzzleButtonClicked() {
     buttonSolve.style.backgroundColor = "red";
     buttonSolve.textContent = "Stop Solving";
     isWorkerActive = true;
+
+    worker.onmessage = function (event) {
+      const solution = event.data;
+      console.log("solution: ", solution);
+      solutionArray = solution;
+      worker.terminate();
+      console.log("Termination complete");
+
+      createEmptyPyramid();
+    };
   }
 }
 
@@ -223,4 +235,5 @@ document.querySelector("#rotateButton").addEventListener("click", rotateCamera);
 document
   .querySelector("#solvePuzzleButton")
   .addEventListener("click", solvePuzzleButtonClicked);
+
 createEmptyPyramid();
