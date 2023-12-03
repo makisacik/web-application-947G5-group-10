@@ -57,21 +57,19 @@ for (let i = 0; i < 5; i++) {
 }
 
 const colorsArray = [
-  "#FF0000",
-  "#FFA500",
-  "#FFFF00",
-  "#008000",
-  "#0000FF",
-  "#4B0082",
-  "#EE82EE",
-  "#A52A2A",
-  "#FFC0CB",
-  "#808080",
-  "#800080",
-  "#00FFFF",
+  "#E71D10",
+  "#EB68A4",
+  "#FFBCDE",
+  "#077FC8",
+  "#FCE22C",
+  "#B76AB0",
+  "#6D3E8F",
+  "#83C789",
+  "#F36E23",
+  "#00A235",
+  "#F6B736",
+  "#87C3E7",
 ];
-
-console.log(colorsArray);
 
 import * as THREE from "https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js";
 import { OrbitControls } from "https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js";
