@@ -3,7 +3,6 @@ function copyArray(arr) {
 }
 
 const threeDArray = [
-  // First 2D array
   [
     [0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0],
@@ -12,7 +11,6 @@ const threeDArray = [
     [0, 0, 0, 0, 0],
   ],
 
-  // Second 2D array
   [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
@@ -20,20 +18,17 @@ const threeDArray = [
     [0, 0, 0, 0],
   ],
 
-  // Third 2D array
   [
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0],
   ],
 
-  // Fourth 2D array
   [
     [0, 0],
     [0, 0],
   ],
 
-  // Fifth 2D array
   [[0]],
 ];
 

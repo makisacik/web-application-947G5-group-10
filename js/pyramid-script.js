@@ -1,5 +1,7 @@
+let worker;
+let isWorkerActive = false;
+
 const solutionArray = [
-  // First 2D array
   [
     [1, 1, 3, 6, 6],
     [1, 1, 3, 10, 6],
@@ -8,7 +10,6 @@ const solutionArray = [
     [4, 12, 12, 12, 5],
   ],
 
-  // Second 2D array
   [
     [2, 2, 2, 10],
     [2, 8, 10, 9],
@@ -16,20 +17,17 @@ const solutionArray = [
     [11, 9, 9, 5],
   ],
 
-  // Third 2D array
   [
     [8, 7, 10],
     [7, 7, 7],
     [11, 7, 5],
   ],
 
-  // Fourth 2D array
   [
     [8, 10],
     [11, 5],
   ],
 
-  // Fifth 2D array
   [[11]],
 ];
 
@@ -116,7 +114,6 @@ function createEmptyPyramid() {
         sphere.material.color.set(colorsArray[colorIndex]);
 
         // print i j k to console
-        console.log(i, j, k);
         pyramid.add(sphere);
       }
     }
@@ -201,10 +198,29 @@ function stopCameraRotation() {
   isCameraRotating = false;
 }
 
+function solvePuzzleButtonClicked() {
+  const buttonSolve = document.getElementById("solvePuzzleButton");
+  if (isWorkerActive) {
+    buttonSolve.textContent = "Solve Puzzle";
+    buttonSolve.style.backgroundColor = "#007BFF";
+    isWorkerActive = false;
+    worker.terminate();
+  } else {
+    worker = new Worker("../js/pyramid-solver.js");
+    worker.postMessage("start");
+    buttonSolve.style.backgroundColor = "red";
+    buttonSolve.textContent = "Stop Solving";
+    isWorkerActive = true;
+  }
+}
+
 document
   .querySelector("#resetButton")
   .addEventListener("click", resetCameraPosition);
 
 document.querySelector("#rotateButton").addEventListener("click", rotateCamera);
 
+document
+  .querySelector("#solvePuzzleButton")
+  .addEventListener("click", solvePuzzleButtonClicked);
 createEmptyPyramid();
