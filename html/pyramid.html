@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pyramid Puzzle Solver</title>
+    <link rel="stylesheet" href="../css/pyramid-style.css" />
+  </head>
+  <body>
+    <h1>3D Pyramid</h1>
+    <div id="three-container"></div>
+    <div class="button-container">
+      <button class="button" id="resetButton">Reset Camera</button>
+      <button class="button" id="rotateButton">Rotate Camera</button>
+
+      <label class="label-solution" id="labelSolutionCount"></label>
+      <label class="label-solution" id="labelCurrentSolution"></label>
+
+      <button class="button" id="buttonPreviousSolution">
+        Previous Solution
+      </button>
+      <button class="button" id="buttonNextSolution">Next Solution</button>
+    </div>
+
+    <div class="button-container">
+      <button class="button" id="solvePuzzleButton">Solve Puzzle</button>
+    </div>
+    <script type="module" src="../js/pyramid-script.js"></script>
+  </body>
+</html>
