@@ -369,6 +369,11 @@ function fs(pc, used, placed, result, solutions) {
   return;
 }
 
+
+function checkPolyspshereSolution(){
+	
+alert("checkPolyspshereSolution");
+	
 const used = makeEmptyUsed();
 const placed = [];
 const result = [];
@@ -391,3 +396,6 @@ console.log(`Elapsed Time: ${elapsedTimeInSeconds} seconds`);
 
 console.log("Algorithm finished. Solutions found: ", solutions.length);
 console.log("Solutions: ", solutions);
+
+return;
+}
