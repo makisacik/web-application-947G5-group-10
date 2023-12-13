@@ -374,7 +374,6 @@ const placed = [];
 const result = [];
 const solutions = [];
 
-//
 const startTime = new Date();
 
 console.log("Algorithm started");

@@ -48,7 +48,6 @@ for (let i = 0; i < 5; i++) {
   }
 }
 
-// Print the 3D array to the console
 for (let i = 0; i < 5; i++) {
   for (let j = 0; j < 5; j++) {
     console.log(threeDArray[i][j].join(" "));
@@ -97,18 +96,16 @@ function createPyramid(solutionArray) {
     const rowSize = i;
     for (let j = 0; j < rowSize; j++) {
       for (let k = 0; k < rowSize; k++) {
-        const radius = 0.55; // Smaller spheres
+        const radius = 0.55;
         const geometry = new THREE.SphereGeometry(radius, 32, 32);
         const material = new THREE.MeshBasicMaterial({
           color: 0xd520f7,
-          //wireframe: true,
         });
         const sphere = new THREE.Mesh(geometry, material);
 
-        // Position spheres in a 3D pyramid shape
-        sphere.position.y = (levels - i) * 2; // Adjust the vertical position
-        sphere.position.x = j * 2 - (rowSize - 1); // Adjust the horizontal position
-        sphere.position.z = k * 2 - (rowSize - 1); // Adjust the depth position
+        sphere.position.y = (levels - i) * 2;
+        sphere.position.x = j * 2 - (rowSize - 1);
+        sphere.position.z = k * 2 - (rowSize - 1);
 
         // Set the color of the sphere
         let colorIndex = solutionArray[4 - (i - 1)][j][k];
@@ -140,13 +137,13 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
 controls.dampingFactor = 0.25; // friction/smoothness of the rotation
 controls.screenSpacePanning = false;
-controls.maxPolarAngle = Math.PI / 2; // don't allow orbiting below the ground
+controls.maxPolarAngle = Math.PI / 2;
 
 // Animation function
 function animate() {
   requestAnimationFrame(animate);
 
-  controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
+  controls.update();
 
   renderer.render(scene, camera);
 }
@@ -158,7 +155,6 @@ window.addEventListener("resize", () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// Start animation
 animate();
 
 function resetCameraPosition() {
